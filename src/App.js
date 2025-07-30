@@ -1,16 +1,23 @@
 import { useState } from 'react';
+import { evaluate } from 'mathjs';
 import './App.css';
 
 function App() {
   const [input, setInput] = useState('');
   const [result, setResult] = useState(0);
 
+  const calculateResult = (expr) => {
+    try {
+      return evaluate(expr);
+    } catch (error) {
+      return 'Error';
+    }
+  };
+
   const handleClick = (value) => {
     if (value === '=') {
-      try {
-        setResult(eval(input));
-      } catch (error) {
-        setResult('Error');
+      if (input) {
+        setResult(calculateResult(input));
       }
     } else if (value === 'C') {
       setInput('');
